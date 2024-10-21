@@ -1,3 +1,5 @@
+ARG TARGETPLATFORM
+ARG BUILDPLATFORM
 # renovate: datasource=github-releases depName=jellyfin/jellyfin versioning=loose
 ARG JELLYFIN_VERSION=10.9.11
 

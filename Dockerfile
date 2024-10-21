@@ -1,4 +1,4 @@
-# renovate: datasource=docker depName=jellyfin/jellyfin versioning=semver
+# renovate: datasource=github-releases depName=jellyfin/jellyfin versioning=loose
 ARG JELLYFIN_VERSION=10.9.11
 
 FROM debian:bookworm-slim AS builder

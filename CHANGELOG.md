@@ -8,6 +8,8 @@
 
 ### Misc
 
+- Migrate renovate config [[#7](https://github.com/CrystalNET-org/jellyfin/pull/7)]
+- Migrate renovate config [[#7](https://github.com/CrystalNET-org/jellyfin/pull/7)]
 - Update renovate/renovate Docker tag to v38 [[#6](https://github.com/CrystalNET-org/jellyfin/pull/6)]
 - Update renovate/renovate Docker tag to v38 [[#6](https://github.com/CrystalNET-org/jellyfin/pull/6)]
 - Update woodpeckerci/plugin-git Docker tag to v2.6.0 [[#4](https://github.com/CrystalNET-org/jellyfin/pull/4)]

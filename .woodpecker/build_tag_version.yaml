@@ -1,6 +1,6 @@
 clone:
   git:
-    image: harbor.crystalnet.org/dockerhub-proxy/woodpeckerci/plugin-git:2.4.0
+    image: harbor.crystalnet.org/dockerhub-proxy/woodpeckerci/plugin-git:2.6.0
     settings:
       partial: false
       depth: 1
@@ -19,7 +19,7 @@ steps:
       registry: harbor.crystalnet.org
       auto_tag: true
       dockerfile: Dockerfile
-      platforms: linux/amd64,linux/i386,linux/arm64/v8,linux/arm/v7
+      platforms: linux/amd64,linux/arm64/v8,linux/arm/v7
       dry_run: false
 when:
   branch: ${CI_REPO_DEFAULT_BRANCH}

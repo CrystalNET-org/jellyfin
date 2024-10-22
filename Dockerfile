@@ -2,9 +2,11 @@ ARG TARGETPLATFORM
 ARG BUILDPLATFORM
 # renovate: datasource=github-releases depName=jellyfin/jellyfin versioning=loose
 ARG JELLYFIN_VERSION=10.9.11
+ARG PROTOC_VERSION=28.2
 
 FROM debian:bookworm-slim AS builder
 ARG JELLYFIN_VERSION
+ARG PROTOC_VERSION
 
 # Setzen der Arbeitsverzeichnis im Container
 WORKDIR /app
@@ -14,8 +16,10 @@ RUN apt-get update && apt-get install -y \
     git \
     python3 \
     python3-pip \
-    protobuf-compiler \
     && rm -rf /var/lib/apt/lists/*
+
+RUN curl -LO https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOC_VERSION}/protoc-${PROTOC_VERSION}-linux-x86_64.zip && \
+    unzip protoc-${PROTOC_VERSION}-linux-x86_64.zip -d /app/.local
 
 # Upgrade pip
 RUN pip3 install --break-system-packages --upgrade pip
@@ -26,17 +30,11 @@ RUN git clone https://github.com/CrystalNET-org/grpc-ffmpeg.git && \
 
 # Kompilieren der .proto-Datei für Python
 RUN python3 -m pip install --break-system-packages grpcio grpcio-tools 
-RUN python3 -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ffmpeg.proto
+RUN PATH="$PATH:$HOME/app/.local/bin" python3 -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ffmpeg.proto
 
 FROM docker.io/jellyfin/jellyfin:${JELLYFIN_VERSION}
 
 ARG JELLYFIN_VERSION
-
-ENV FFMPEGOF_PROGRAM_LOG=/config/log \
-    FFMPEGOF_DIRECTORIES_OWNER=64710 \
-    FFMPEGOF_DIRECTORIES_GROUP=64710 \
-    FFMPEGOF_REMOTE_USER=root \
-    FFMPEGOF_DATABASE_PATH=/config/ffmpegof/db
 
 RUN sed -i 's/Components: main/Components: main contrib non-free/' /etc/apt/sources.list.d/debian.sources
 

@@ -1,7 +1,7 @@
 ARG TARGETPLATFORM
 ARG BUILDPLATFORM
 # renovate: datasource=github-releases depName=jellyfin/jellyfin versioning=loose
-ARG JELLYFIN_VERSION=10.10.0
+ARG JELLYFIN_VERSION=10.10.1
 ARG PROTOC_VERSION=28.2
 
 FROM debian:bookworm-slim AS builder
@@ -57,7 +57,8 @@ RUN apt-get update && apt-get install -y \
     libc-bin \
     ca-certificates \
     wget \
-    python3-pip
+    python3-pip \
+    strace
 
 RUN pip3 install --break-system-packages --upgrade pip
 RUN python3 -m pip install --break-system-packages grpcio grpcio-tools aiofiles

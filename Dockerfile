@@ -70,10 +70,10 @@ RUN groupadd -g 64710 jellyfin && \
 EXPOSE 8096
 VOLUME /config
 
-ENTRYPOINT "/jellyfin/jellyfin" \
+ENTRYPOINT ["/jellyfin/jellyfin" \
     "--datadir" "/data" \
     "--configdir" "/config" \
     "--cachedir" "/cache" \
-    "--ffmpeg" "/usr/local/bin/ffmpeg"
+    "--ffmpeg" "/usr/local/bin/ffmpeg"]
 
 LABEL org.opencontainers.image.source="https://github.com/CrystalNET-org/jellyfin"

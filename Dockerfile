@@ -28,7 +28,7 @@ RUN pip3 install --break-system-packages --upgrade pip
 
 # Checkout latest master of grpc-ffmpeg
 RUN git clone https://github.com/CrystalNET-org/grpc-ffmpeg.git && \
-    mv grpc-ffmpeg/proto/ffmpeg.proto .
+    mv grpc-ffmpeg/src/proto/ffmpeg.proto .
 
 # Kompilieren der .proto-Datei für Python
 RUN python3 -m pip install --break-system-packages grpcio grpcio-tools 
@@ -40,7 +40,7 @@ ARG JELLYFIN_VERSION
 
 RUN sed -i 's/Components: main/Components: main contrib non-free/' /etc/apt/sources.list.d/debian.sources
 
-COPY --from=builder /app/grpc-ffmpeg/client/grpc-ffmpeg.py /usr/local/bin/grpc-ffmpeg.py
+COPY --from=builder /app/grpc-ffmpeg/src/client/grpc-ffmpeg.py /usr/local/bin/grpc-ffmpeg.py
 COPY --from=builder /app/ffmpeg* /usr/local/bin/
 
 RUN chmod a+x /usr/local/bin/grpc-ffmpeg.py && \

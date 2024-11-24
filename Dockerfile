@@ -58,6 +58,7 @@ RUN apt-get update && apt-get install -y \
     ca-certificates \
     wget \
     python3-pip \
+    sqlite3 \
     strace
 
 RUN pip3 install --break-system-packages --upgrade pip

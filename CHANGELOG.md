@@ -1,5 +1,15 @@
 # Changelog
 
+## [10.9.11](https://github.com/CrystalNET-org/jellyfin/releases/tag/10.9.11) - 2024-10-27
+
+### ❤️ Thanks to all contributors! ❤️
+
+@psych0d0g
+
+### Misc
+
+- Update renovate/renovate Docker tag to v38.132.3 [[#10](https://github.com/CrystalNET-org/jellyfin/pull/10)]
+
 ## [0.0.1](https://github.com/CrystalNET-org/jellyfin/releases/tag/0.0.1) - 2024-10-21
 
 ### ❤️ Thanks to all contributors! ❤️

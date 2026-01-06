@@ -1,8 +1,8 @@
 ARG TARGETPLATFORM
 ARG BUILDPLATFORM
 # renovate: datasource=github-releases depName=jellyfin/jellyfin versioning=loose
-ARG JELLYFIN_VERSION=10.10.3
-ARG PROTOC_VERSION=28.2
+ARG JELLYFIN_VERSION=10.10.7
+ARG PROTOC_VERSION=33.2
 
 FROM debian:bookworm-slim AS builder
 ARG JELLYFIN_VERSION

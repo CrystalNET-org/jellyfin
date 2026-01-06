@@ -8,10 +8,11 @@ clone:
 steps:
   - name: renovate
     image: harbor.crystalnet.org/dockerhub-proxy/renovate/renovate:38.132.3
-    secrets: 
-      - github_com_token
-      - renovate_token
     environment:
+      GITHUB_COM_TOKEN:
+          from_secret: github_com_token
+      RENOVATE_TOKEN:
+          from_secret: renovate_token
       RENOVATE_CONFIG_FILE: .woodpecker/renovate_config.json
       RENOVATE_DRY_RUN: false
       RENOVATE_ENDPOINT: https://api.github.com

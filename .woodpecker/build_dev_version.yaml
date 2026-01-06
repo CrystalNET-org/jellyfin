@@ -1,5 +1,5 @@
 steps:
-  docker-build-dev:
+  - name: docker-build-dev
     image: woodpeckerci/plugin-docker-buildx:6.0.3
     settings:
       debug: true

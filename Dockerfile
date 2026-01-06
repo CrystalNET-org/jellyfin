@@ -24,7 +24,7 @@ RUN curl -LO https://github.com/protocolbuffers/protobuf/releases/download/v${PR
     unzip protoc-${PROTOC_VERSION}-linux-x86_64.zip -d /app/.local
 
 # Upgrade pip
-RUN pip3 install --break-system-packages --upgrade pip
+#RUN pip3 install --break-system-packages --upgrade pip
 
 # Checkout latest master of grpc-ffmpeg
 RUN git clone https://github.com/CrystalNET-org/grpc-ffmpeg.git && \
@@ -53,7 +53,7 @@ RUN apt-get update && apt-get install -y \
     openssh-client \
     python3-click \
     python3-yaml \
-    libssl3 \
+    libssl3t64 \
     libc-bin \
     ca-certificates \
     wget \

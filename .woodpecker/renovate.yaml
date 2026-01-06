@@ -6,16 +6,16 @@ clone:
       depth: 1
 
 steps:
-  renovate:
+  - name: renovate
     image: harbor.crystalnet.org/dockerhub-proxy/renovate/renovate:38.132.3
     secrets: 
       - github_com_token
       - renovate_token
     environment:
-      - RENOVATE_CONFIG_FILE=.woodpecker/renovate_config.json
-      - RENOVATE_DRY_RUN=false
-      - RENOVATE_ENDPOINT=https://api.github.com
-      - SHELL=/bin/bash
+      - RENOVATE_CONFIG_FILE: .woodpecker/renovate_config.json
+      - RENOVATE_DRY_RUN: false
+      - RENOVATE_ENDPOINT: https://api.github.com
+      - SHELL: /bin/bash
     commands:
       - LOG_LEVEL=debug renovate --platform github --git-author "Renovate <renovate@local.bot>" --ignore-pr-author true
 when:

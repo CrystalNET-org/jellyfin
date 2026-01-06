@@ -61,7 +61,7 @@ RUN apt-get update && apt-get install -y \
     sqlite3 \
     strace
 
-RUN pip3 install --break-system-packages --upgrade pip
+#RUN pip3 install --break-system-packages --upgrade pip
 RUN python3 -m pip install --break-system-packages grpcio grpcio-tools aiofiles
 
 

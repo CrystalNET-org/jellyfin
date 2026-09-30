@@ -1,6 +1,6 @@
-# renovate: datasource=github-releases depName=jellyfin/jellyfin versioning=loose
+# renovate: datasource=github-releases depName=jellyfin/jellyfin extractVersion=^v(?<version>.*)$ versioning=loose
 ARG JELLYFIN_VERSION=10.11.11
-# renovate: datasource=github-tags depName=CrystalNET-org/grpc-ffmpeg versioning=loose
+# renovate: datasource=github-releases depName=CrystalNET-org/grpc-ffmpeg versioning=loose
 ARG GRPC_FFMPEG_VERSION=7.1.4-7.5
 
 FROM docker.io/jellyfin/jellyfin:${JELLYFIN_VERSION}

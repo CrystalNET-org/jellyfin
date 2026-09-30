@@ -1,52 +1,48 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
   "dependencyDashboard": true,
-  "woodpecker": {
-    "enabled": false
-  },
-  "dockerfile": {
-    "enabled": true
-  },
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": [
-        "Dockerfile$"
-      ],
+      "description": "Versions annotated with a '# renovate:' comment",
+      "managerFilePatterns": ["/(^|/)Dockerfile$/"],
       "matchStrings": [
-        "datasource=(?<datasource>.*?) depName=(?<depName>.*?)(?: extractVersion=(?<extractVersion>.+?))?( versioning=(?<versioning>.*?))?\\s(?:ENV|ARG) .*?_VERSION=(?<currentValue>.*)\\s"
+        "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( extractVersion=(?<extractVersion>\\S+))?( versioning=(?<versioning>\\S+))?\\s+(ARG|ENV) [A-Z_]+_VERSION=(?<currentValue>\\S+)"
       ],
       "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
     },
     {
       "customType": "regex",
-      "fileMatch": [
-        "Dockerfile$"
-      ],
+      "description": "Images pulled through the Harbor Docker Hub proxy",
+      "managerFilePatterns": ["/(^|/)\\.woodpecker/[^/]+\\.ya?ml$/"],
       "matchStrings": [
-        "ARG IMAGE=(?<depName>.*?):(?<currentValue>.*?)@(?<currentDigest>sha256:[a-f0-9]+)\\s"
+        "image: harbor\\.crystalnet\\.org/dockerhub-proxy/(?<depName>[^:\\s]+):(?<currentValue>\\S+)"
       ],
       "datasourceTemplate": "docker"
+    }
+  ],
+  "packageRules": [
+    {
+      "description": "Jellyfin patch releases: automerge a day after release (the Docker image can lag behind the GitHub release); the merge is released automatically (.woodpecker/auto_release.yaml)",
+      "matchPackageNames": ["jellyfin/jellyfin"],
+      "matchUpdateTypes": ["patch"],
+      "minimumReleaseAge": "1 day",
+      "automerge": true,
+      "automergeType": "pr"
     },
     {
-      "customType": "regex",
-      "fileMatch": [
-        "Dockerfile$"
-      ],
-      "matchStrings": [
-        "FROM harbor\\.crystalnet\\.org/dockerhub-proxy/(?<depName>.*?):(?<currentValue>.*?) as .*\n"
-      ],
-      "datasourceTemplate": "docker"
+      "description": "Jellyfin minor/major releases may need migrations: PR only",
+      "matchPackageNames": ["jellyfin/jellyfin"],
+      "matchUpdateTypes": ["minor", "major"],
+      "automerge": false
     },
     {
-      "customType": "regex",
-      "fileMatch": [
-        "^\\.woodpecker/.*\\.ya?ml$"
-      ],
-      "matchStrings": [
-        "image: harbor\\.crystalnet\\.org/dockerhub-proxy/(?<depName>.*?):(?<currentValue>.*?)\n"
-      ],
-      "datasourceTemplate": "docker"
+      "description": "grpc-ffmpeg releases: automerge once the release's client binaries are published",
+      "matchPackageNames": ["CrystalNET-org/grpc-ffmpeg"],
+      "minimumReleaseAge": "1 hour",
+      "automerge": true,
+      "automergeType": "pr"
     }
   ]
 }

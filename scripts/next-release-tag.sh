@@ -2,8 +2,8 @@
 # Prints the tag for releasing the current commit if the Jellyfin or
 # grpc-ffmpeg version differs from the latest release, and nothing otherwise.
 #
-# Release tags are <Jellyfin version>-<n>, e.g. 10.11.11-1; n counts the
-# releases of the same Jellyfin version.
+# Release tags are <Jellyfin version>-<n>, e.g. 10.11.11-1 or 12.1-1 (Jellyfin
+# 12 versions have two parts); n counts the releases of the same version.
 set -eu
 
 versions() { grep -E '^ARG (JELLYFIN|GRPC_FFMPEG)_VERSION=' | sort; }
@@ -13,10 +13,11 @@ if [ -z "$current_version" ]; then
     exit 1
 fi
 
-# Latest release, ordered by Jellyfin version, then n
+# Latest release, ordered by Jellyfin version (a missing third part counts
+# as 0), then n
 latest=$(git tag -l \
-    | grep -E '^[0-9]+\.[0-9]+\.[0-9]+-[0-9]+$' \
-    | awk -F'[.-]' '{ print $1, $2, $3, $4, $0 }' \
+    | grep -E '^[0-9]+\.[0-9]+(\.[0-9]+)?-[0-9]+$' \
+    | awk -F- '{ n = split($1, v, "."); print v[1], v[2], (n > 2 ? v[3] : 0), $2, $0 }' \
     | sort -n -k1,1 -k2,2 -k3,3 -k4,4 \
     | tail -n 1 \
     | cut -d' ' -f5)

@@ -1,12 +1,16 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended"],
+  "extends": [
+    "config:recommended"
+  ],
   "dependencyDashboard": true,
   "customManagers": [
     {
       "customType": "regex",
       "description": "Versions annotated with a '# renovate:' comment",
-      "managerFilePatterns": ["/(^|/)Dockerfile$/"],
+      "managerFilePatterns": [
+        "/(^|/)Dockerfile$/"
+      ],
       "matchStrings": [
         "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( extractVersion=(?<extractVersion>\\S+))?( versioning=(?<versioning>\\S+))?\\s+(ARG|ENV) [A-Z_]+_VERSION=(?<currentValue>\\S+)"
       ],
@@ -15,7 +19,9 @@
     {
       "customType": "regex",
       "description": "Images pulled through the Harbor Docker Hub proxy",
-      "managerFilePatterns": ["/(^|/)\\.woodpecker/[^/]+\\.ya?ml$/"],
+      "managerFilePatterns": [
+        "/(^|/)\\.woodpecker/[^/]+\\.ya?ml$/"
+      ],
       "matchStrings": [
         "image: harbor\\.crystalnet\\.org/dockerhub-proxy/(?<depName>[^:\\s]+):(?<currentValue>\\S+)"
       ],
@@ -24,22 +30,44 @@
   ],
   "packageRules": [
     {
+      "description": "The base image's version is tracked through JELLYFIN_VERSION (GitHub releases, see above), not by the Dockerfile manager, which would open a second PR for the same line and scan thousands of date-based unstable Docker Hub tags",
+      "matchManagers": [
+        "dockerfile"
+      ],
+      "matchDepNames": [
+        "docker.io/jellyfin/jellyfin",
+        "jellyfin/jellyfin"
+      ],
+      "enabled": false
+    },
+    {
       "description": "Jellyfin patch releases: automerge a day after release (the Docker image can lag behind the GitHub release); the merge is released automatically (.woodpecker/auto_release.yaml)",
-      "matchPackageNames": ["jellyfin/jellyfin"],
-      "matchUpdateTypes": ["patch"],
+      "matchPackageNames": [
+        "jellyfin/jellyfin"
+      ],
+      "matchUpdateTypes": [
+        "patch"
+      ],
       "minimumReleaseAge": "1 day",
       "automerge": true,
       "automergeType": "pr"
     },
     {
       "description": "Jellyfin minor/major releases may need migrations: PR only",
-      "matchPackageNames": ["jellyfin/jellyfin"],
-      "matchUpdateTypes": ["minor", "major"],
+      "matchPackageNames": [
+        "jellyfin/jellyfin"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "major"
+      ],
       "automerge": false
     },
     {
       "description": "grpc-ffmpeg releases: automerge once the release's client binaries are published",
-      "matchPackageNames": ["CrystalNET-org/grpc-ffmpeg"],
+      "matchPackageNames": [
+        "CrystalNET-org/grpc-ffmpeg"
+      ],
       "minimumReleaseAge": "1 hour",
       "automerge": true,
       "automergeType": "pr"

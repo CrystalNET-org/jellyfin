@@ -1,5 +1,5 @@
 # renovate: datasource=github-releases depName=jellyfin/jellyfin extractVersion=^v(?<version>.*)$ versioning=loose
-ARG JELLYFIN_VERSION=10.11.11
+ARG JELLYFIN_VERSION=12.1
 # renovate: datasource=github-releases depName=CrystalNET-org/grpc-ffmpeg versioning=loose
 ARG GRPC_FFMPEG_VERSION=7.1.4-7.5
 

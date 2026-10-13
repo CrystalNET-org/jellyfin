@@ -15,6 +15,6 @@ Run the image with grpc-ffmpeg workers of the same ffmpeg major version as Jelly
 
 Updates are released automatically:
 
-1. Renovate opens PRs for new Jellyfin patch releases (one day after release) and new grpc-ffmpeg releases (one hour after release).
-2. The PR pipeline test-builds the image for amd64 and arm64, and Renovate merges the PR once it passes. Jellyfin minor and major updates are left for manual review.
+1. Renovate opens PRs for new Jellyfin minor releases (one day after release) and new grpc-ffmpeg releases (one hour after release).
+2. The PR pipeline test-builds the image for amd64 and arm64, and Renovate merges the PR once it passes. Jellyfin major updates are left for manual review.
 3. On `main`, `.woodpecker/auto_release.yaml` pushes the next tag once the dev build of the commit succeeded, if the Jellyfin or grpc-ffmpeg version differs from the latest release (`scripts/next-release-tag.sh`), and the tag pipeline builds and pushes the image.

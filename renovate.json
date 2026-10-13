@@ -41,11 +41,12 @@
       "enabled": false
     },
     {
-      "description": "Jellyfin patch releases: automerge a day after release (the Docker image can lag behind the GitHub release); the merge is released automatically (.woodpecker/auto_release.yaml)",
+      "description": "Jellyfin minor and patch releases (Jellyfin 12 versions are <major>.<minor>, with no patch releases): automerge a day after release (the Docker image can lag behind the GitHub release); the merge is released automatically (.woodpecker/auto_release.yaml)",
       "matchPackageNames": [
         "jellyfin/jellyfin"
       ],
       "matchUpdateTypes": [
+        "minor",
         "patch"
       ],
       "minimumReleaseAge": "1 day",
@@ -53,12 +54,11 @@
       "automergeType": "pr"
     },
     {
-      "description": "Jellyfin minor/major releases may need migrations: PR only",
+      "description": "Jellyfin major releases may need migrations: PR only",
       "matchPackageNames": [
         "jellyfin/jellyfin"
       ],
       "matchUpdateTypes": [
-        "minor",
         "major"
       ],
       "automerge": false

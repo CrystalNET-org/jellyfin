@@ -13,7 +13,7 @@ when:
 
 steps:
   - name: tag-release
-    image: alpine/git:v2.54.0
+    image: alpine/git:v2.54.1
     environment:
       GITHUB_TOKEN:
         from_secret: GITHUB_TOKEN
